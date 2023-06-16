@@ -5,7 +5,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
+  position: relative;
 }
+
 .app main {
   width: 100%;
   max-width: 100vw;
@@ -13,4 +16,5 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
