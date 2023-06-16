@@ -20,6 +20,10 @@ Check out our [deployed Student Store](https://codepath-student-store-demo.surge
 - [x] Users can search for products.
 - [x] User can click on a product in the grid to navigate to a new page containing additional product details.
 
+<a href="https://www.youtube.com/embed/uUDNCHx62UY">
+   <p>Project video title</p>
+</a>
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uUDNCHx62UY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Stretch Features
