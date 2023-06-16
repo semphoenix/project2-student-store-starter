@@ -19,7 +19,7 @@ export default function App() {
       .get(`https://codepath-store-api.herokuapp.com/store`)
       .then((response) => {
         setProductList(response.data.products);
-        setFilteredList(productList);
+        setFilteredList(response.data.products);
       })
       .catch((error) => {
         console.log(error);
@@ -39,11 +39,12 @@ export default function App() {
         catName={element}
         isActive={selectedCat === element}
         handleClick={() => {
+          console.log("!");
           setSelectedCat(element);
           element === "All Categories"
             ? setFilteredList(
                 productList.filter((product) =>
-                  product.name.toLowerCase().includes(event.target.value)
+                  product.name.toLowerCase().includes(search)
                 )
               )
             : setFilteredList(
@@ -91,6 +92,7 @@ export default function App() {
             path="/"
             element={
               <main>
+                <div id="Start"></div>
                 <Navbar />
                 <Sidebar />
                 <Home
@@ -107,14 +109,12 @@ export default function App() {
             path="/products/:productId"
             element={
               <main>
+                <div id="Start"></div>
                 <Navbar />
                 <Sidebar />
                 <ProductDetail
-                  product={productList.filter((productElement) => {
-                    const { productId } = useParams();
-                    console.log(productId);
-                    productElement.id === useParams().productId;
-                  })}
+                  handleAddItemToCart={handleAddItemToCart}
+                  handleRemoveItemToCart={handleRemoveItemToCart}
                 />
               </main>
             }

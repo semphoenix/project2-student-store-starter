@@ -49,6 +49,7 @@ const ProductCard = (props) => {
   );
 
   const [quantity, setQuantity] = useState(0);
+  //console.log(props.product);
 
   return (
     <div className="product-card">

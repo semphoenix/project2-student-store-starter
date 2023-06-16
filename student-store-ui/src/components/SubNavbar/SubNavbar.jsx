@@ -3,7 +3,7 @@ import "./SubNavbar.css";
 
 export default function SubNavbar({ categoryList, handleSearch }) {
   return (
-    <nav class="sub-navbar">
+    <nav className="sub-navbar">
       <div className="content">
         <div className="row">
           <div className="search-bar">

@@ -3,6 +3,9 @@ import "./Home.css";
 import Hero from "../Hero/Hero";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import SubNavbar from "../SubNavbar/SubNavbar";
+import About from "../About/About";
+import Contact from "../Contact/Contact";
+import Footer from "../Footer/Footer";
 
 export default function Home({
   products,
@@ -19,7 +22,10 @@ export default function Home({
         products={products}
         handleAddItemToCart={handleAddItemToCart}
         handleRemoveItemToCart={handleRemoveItemToCart}
-      ></ProductGrid>
+      />
+      <About />
+      <Contact />
+      <Footer />
     </div>
   );
 }
