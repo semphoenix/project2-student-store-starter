@@ -139,6 +139,7 @@ export default function App() {
       name: checkoutForm.name,
       email: checkoutForm.email,
       shoppingCart: shoppingCart,
+      total: totalPrice,
     });
     setCheckoutForm({
       name: "",

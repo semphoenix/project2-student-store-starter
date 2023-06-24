@@ -124,12 +124,16 @@ const CheckoutForm = ({
                         </li>
                       );
                     })}
+                    <li>
+                      Before taxes, the total was{" "}
+                      {formatter.format(receipt.total)}
+                    </li>
+                    <li>
+                      After taxes and fees were applied, the total comes out to{" "}
+                      {formatter.format(receipt.total * 1.0875)}{" "}
+                    </li>
                   </ul>
                 </section>
-                <footer className="card-foot">
-                  <button className="button is-success">Shop More</button>
-                  <button className="button">Exit</button>
-                </footer>
               </div>
             )}
             {!receipt && (
