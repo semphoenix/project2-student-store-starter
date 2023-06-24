@@ -13,6 +13,8 @@ export default function Home({
   handleRemoveItemToCart,
   categoryList,
   handleSearch,
+  shoppingCart,
+  onProductCardClick,
 }) {
   return (
     <div className="home">
@@ -22,6 +24,8 @@ export default function Home({
         products={products}
         handleAddItemToCart={handleAddItemToCart}
         handleRemoveItemToCart={handleRemoveItemToCart}
+        shoppingCart={shoppingCart}
+        onProductCardClick={onProductCardClick}
       />
       <About />
       <Contact />

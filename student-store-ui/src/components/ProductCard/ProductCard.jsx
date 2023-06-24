@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ProductCard.css";
 
@@ -48,14 +48,11 @@ const ProductCard = (props) => {
     </div>
   );
 
-  const [quantity, setQuantity] = useState(0);
-  //console.log(props.product);
-
   return (
     <div className="product-card">
       <div className="media">
         <Link to={`/products/${props.productId}`}>
-          <img src={props.product.image} />
+          <img src={props.product.image} onClick={props.onProductCardClick} />
         </Link>
       </div>
       <div className="product-info">
@@ -77,21 +74,25 @@ const ProductCard = (props) => {
           <div className="buttons">
             <button
               className="add"
-              onClick={() => props.handleAddItemToCart(props.productId)}
+              onClick={() => {
+                props.handleAddItemToCart();
+              }}
             >
               <i className="material-icons">add</i>
             </button>
             <button
               className="remove"
-              onClick={() => props.handleRemoveItemToCart(props.productId)}
+              onClick={() => {
+                props.handleRemoveItemToCart();
+              }}
             >
               <i className="material-icons">remove</i>
             </button>
           </div>
-          {quantity > 0 && (
+          {props.quantity > 0 && (
             <div className="product-quantity">
               <span className="quantity">
-                <span className="amt">{quantity}</span>
+                <span className="amt">{props.quantity}</span>
               </span>
             </div>
           )}

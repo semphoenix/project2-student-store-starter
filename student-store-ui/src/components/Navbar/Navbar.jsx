@@ -46,7 +46,7 @@ export default function Navbar(props) {
         <div className="socials">{socialIcons}</div>
         <ul className="links">
           <li>
-            <a href="/#Start">Home</a>
+            <Link to="/#Start">Home</Link>
           </li>
           <li>
             <a href="/#About">About Us</a>

@@ -13,10 +13,18 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [selectedCat, setSelectedCat] = useState("All Categories");
   const [filteredList, setFilteredList] = useState([]);
+  const [shoppingCart, setShoppingCart] = useState([]);
+  const [sideBarIsOpen, setSideBarIsOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [checkoutForm, setCheckoutForm] = useState({
+    name: "",
+    email: "",
+  });
+  const [receipt, setReceipt] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`https://codepath-store-api.herokuapp.com/store`)
+      .get(`http://localhost:3001/store/`)
       .then((response) => {
         setProductList(response.data.products);
         setFilteredList(response.data.products);
@@ -25,6 +33,22 @@ export default function App() {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    getTotal();
+  }, [shoppingCart]);
+
+  const getTotal = () => {
+    let newTotalPrice = 0;
+    shoppingCart.map((element, index) => {
+      const product = productList.find((product) => product.id === element.id);
+      const newCardProduct = shoppingCart.find(
+        (product) => product.id === element.id
+      );
+      newTotalPrice += newCardProduct.quantity * product.price;
+    });
+    setTotalPrice(newTotalPrice);
+  };
 
   const catList = [
     "All Categories",
@@ -39,19 +63,18 @@ export default function App() {
         catName={element}
         isActive={selectedCat === element}
         handleClick={() => {
-          console.log("!");
           setSelectedCat(element);
           element === "All Categories"
             ? setFilteredList(
                 productList.filter((product) =>
-                  product.name.toLowerCase().includes(search)
+                  product.name.toLowerCase().includes(search.toLowerCase())
                 )
               )
             : setFilteredList(
                 productList.filter(
                   (product) =>
                     product.category === element.toLowerCase() &&
-                    product.name.toLowerCase().includes(search)
+                    product.name.toLowerCase().includes(search.toLowerCase())
                 )
               );
         }}
@@ -59,11 +82,28 @@ export default function App() {
     );
   });
 
-  const handleAddItemToCart = (productId) => {
-    console.log("!");
+  const handleAddItemToCart = (id) => {
+    const cartProduct = shoppingCart.find((product) => product.id === id);
+    if (cartProduct) {
+      cartProduct.quantity = cartProduct.quantity + 1;
+      //setShoppingCart(shoppingCart);
+    } else setShoppingCart([...shoppingCart, { id: id, quantity: 1 }]);
+    getTotal();
   };
-  const handleRemoveItemToCart = (productId) => {
-    console.log("!");
+  const handleRemoveItemToCart = (id) => {
+    const cartProduct = shoppingCart.find((product) => product.id === id);
+    if (cartProduct) {
+      cartProduct.quantity = cartProduct.quantity - 1;
+      if (cartProduct.quantity === 0) {
+        const productIndex = shoppingCart.findIndex(
+          (product) => product.id === id
+        );
+        if (productIndex !== -1) {
+          shoppingCart.splice(productIndex, 1);
+        }
+      }
+    }
+    getTotal();
   };
 
   const handleSearch = (event) => {
@@ -84,6 +124,35 @@ export default function App() {
         );
   };
 
+  const handleOnToggle = () => {
+    setSideBarIsOpen(!sideBarIsOpen);
+  };
+
+  const handleOnCheckoutFormChange = (event) => {
+    setCheckoutForm({
+      ...checkoutForm,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const handleOnSubmitCheckoutForm = () => {
+    setReceipt({
+      name: checkoutForm.name,
+      email: checkoutForm.email,
+      shoppingCart: shoppingCart,
+    });
+    setCheckoutForm({
+      name: "",
+      email: "",
+    });
+    setShoppingCart([]);
+  };
+
+  const onProductCardClick = () => {
+    setFilteredList(productList);
+    setSearch("");
+    setSelectedCat("All Categories");
+  };
+
   return (
     <div className="app">
       <BrowserRouter>
@@ -93,14 +162,26 @@ export default function App() {
             element={
               <main>
                 <div id="Start"></div>
+                <Sidebar
+                  isOpen={sideBarIsOpen}
+                  handleOnToggle={handleOnToggle}
+                  products={productList}
+                  shoppingCart={shoppingCart}
+                  totalPrice={totalPrice}
+                  checkoutForm={checkoutForm}
+                  handleOnCheckoutFormChange={handleOnCheckoutFormChange}
+                  handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
+                  receipt={receipt}
+                />
                 <Navbar />
-                <Sidebar />
                 <Home
                   products={filteredList}
                   handleAddItemToCart={handleAddItemToCart}
                   handleRemoveItemToCart={handleRemoveItemToCart}
                   categoryList={catList}
                   handleSearch={handleSearch}
+                  shoppingCart={shoppingCart}
+                  onProductCardClick={onProductCardClick}
                 />
               </main>
             }
@@ -110,11 +191,22 @@ export default function App() {
             element={
               <main>
                 <div id="Start"></div>
+                <Sidebar
+                  isOpen={sideBarIsOpen}
+                  handleOnToggle={handleOnToggle}
+                  products={productList}
+                  shoppingCart={shoppingCart}
+                  totalPrice={totalPrice}
+                  checkoutForm={checkoutForm}
+                  handleOnCheckoutFormChange={handleOnCheckoutFormChange}
+                  handleOnSubmitCheckoutForm={handleOnSubmitCheckoutForm}
+                  receipt={receipt}
+                />
                 <Navbar />
-                <Sidebar />
                 <ProductDetail
                   handleAddItemToCart={handleAddItemToCart}
                   handleRemoveItemToCart={handleRemoveItemToCart}
+                  shoppingCart={shoppingCart}
                 />
               </main>
             }

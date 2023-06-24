@@ -3,9 +3,9 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer class="footer">
-      <div class="content">
-        <div class="top">
+    <footer className="footer">
+      <div className="content">
+        <div className="top">
           <h1>Sophia Rodriguez</h1>
         </div>
       </div>

@@ -4,14 +4,18 @@ import ProductView from "../ProductView/ProductView";
 import axios from "axios";
 import "./ProductDetail.css";
 
-const ProductDetail = ({ handleAddItemToCart, handleRemoveItemToCart }) => {
+const ProductDetail = ({
+  handleAddItemToCart,
+  handleRemoveItemToCart,
+  shoppingCart,
+}) => {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`https://codepath-store-api.herokuapp.com/store/${productId}`)
+      .get(`http://localhost:3001/store/${productId}`)
       .then((response) => {
         setProduct(response.data.product);
         setLoading(false);
@@ -31,6 +35,7 @@ const ProductDetail = ({ handleAddItemToCart, handleRemoveItemToCart }) => {
           productId={productId}
           handleAddItemToCart={handleAddItemToCart}
           handleRemoveItemToCart={handleRemoveItemToCart}
+          shoppingCart={shoppingCart}
         />
       </div>
     );

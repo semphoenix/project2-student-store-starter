@@ -6,8 +6,11 @@ const ProductView = ({
   productId,
   handleAddItemToCart,
   handleRemoveItemToCart,
+  shoppingCart,
 }) => {
-  console.log(product);
+  const productInCart = shoppingCart.find(
+    (element) => product.id === element.id
+  );
   return (
     <div className="product-view">
       <h1 className="product-id">Product # {product.id}</h1>
@@ -17,8 +20,13 @@ const ProductView = ({
           productId={productId}
           key={productId}
           showDescription={true}
-          handleAddItemToCart={handleAddItemToCart}
-          handleRemoveItemToCart={handleRemoveItemToCart}
+          handleAddItemToCart={() => {
+            handleAddItemToCart(product.id);
+          }}
+          handleRemoveItemToCart={() => {
+            handleRemoveItemToCart(product.id);
+          }}
+          quantity={productInCart ? productInCart.quantity : 0}
         />
       </div>
     </div>
